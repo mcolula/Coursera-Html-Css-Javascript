@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+  
+    <script>
+      // Global variables
+      var finished = false;
+      var target_index;
+      var guess_input;
+      var tries = 0;
+      var target;
+      // Valid HTML colors
+      var colors = ["black",  "blue",  "brown", "cyan", "darkblue", "gray", 
+                    "green", "lightblue", "magenta", "maroonlime", "olive", 
+                    "orange", "purple", "red", "silver", "white", "yellow"];
+      
+      
+      /************************************************************************
+       * Function: do_game                                                    *
+       * Purpose: Selects a random color from colors array, then asks user    *
+       *          to, guess the color, finishes when the color is correctly   *
+       *          guessed.                                                    *
+       * Parameters: None                                                     *
+       * Returns: Nothing                                                     *
+       ************************************************************************/
+      function do_game() {
+        target_index = Math.floor(Math.random() * colors.length);
+        target = colors[target_index];
+        alert("The color is: " + target);
+        while (!finished) {
+          guess_input = prompt("I am thinking of one of these colors:\n\n" + colors.join(", ") + "\n\n" +
+                               "What color am I thinking of?", "");
+          tries++;
+          finished = check_guess();
+        }
+      }
+      
+      
+      /************************************************************************
+       * Function: check_guess                                                *
+       * Purpose: Checks whether a guess is correct or not giving feedback to *
+       *          the user.                                                   *
+       * Parameters: None                                                     *
+       * Returns: Boolean                                                     *
+       ************************************************************************/
+      function check_guess() {
+        var idx = colors.indexOf(guess_input);
+        if (idx < 0)
+          alert("I don't recognize that color!.\n\n" + 
+                "Please try again.");
+        else if (target < guess_input)
+          alert("Sorry, your guess in not correct!\n\n" + 
+                "Hint: Your input is alphabetically higher than mine!\n\n" + 
+                "Please try again.");
+        else if (target > guess_input)
+          alert("Sorry, your guess in not correct!\n\n" + 
+                "Hint: Your input is alphabetically lower than mine!\n\n"  + 
+                "Please try again.");
+        else {
+          body = document.getElementsByTagName("body")[0];
+          body.style.background = target;
+          alert("Congratulations! You have guessed the color!\n\n"  + 
+                "You are right! You took " + tries + " guesses!\n\n" + 
+                "You can see the color in the background.");
+          return true;
+        }
+        return false;
+      }
+      
+      
+    </script>
+    
+  </head>
+  
+  <body onload='do_game()'>
+  </body>
+  
+</html>
+
+

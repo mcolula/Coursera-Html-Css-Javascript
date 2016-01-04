@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+  
+    <script>
+      // Global variables
+      var finished = false;
+      var target_index;
+      var guess_input;
+      var tries = 0;
+      var target;
+      // Valid HTML colors
+      var colors = ["black",  "blue",  "brown", "cyan", "darkblue", "gray", 
+                    "green", "lightblue", "magenta", "maroonlime", "olive", 
+                    "orange", "purple", "red", "silver", "white", "yellow"];
+      
+      
+      /************************************************************************
+       * Function: do_game                                                    *
+       * Purpose: Selects a random color from colors array, then asks user    *
+       *          to, guess the color, finishes when the color is correctly   *
+       *          guessed.                                                    *
+       * Parameters: None                                                     *
+       * Returns: Nothing                                                     *
+       ************************************************************************/
+      function do_game() {
+        target_index = Math.floor(Math.random() * colors.length);
+        target = colors[target_index];
+        alert("The color is: " + target);
+        while (!finished) {
+          guess_input = prompt("I am thinking of one of these colors:\n\n" + colors.join(", ") + "\n\n" +
+                               "What color am I thinking of?", "");
+          tries++;
+          var idx  = colors.indexOf(guess_input)
+          finished = idx >= 0 && target == guess_input;
+        }
+      }
+      
+    </script>
+    
+  </head>
+  
+  <body onload='do_game()'>
+  </body>
+  
+</html>
+
+
