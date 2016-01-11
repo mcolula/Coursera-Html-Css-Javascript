@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    <title>Guessing game</title>
+    
+    <style>
+      div, img {
+        position: absolute;
+      }  
+      div {
+        width:  500px; 
+        height: 500px;
+      }
+      #rightSide { 
+        left: 500px; 
+        border-left: 1px solid black; 
+      }
+    </style>
+    
+    <script>
+      var numberOfFaces = 5;
+      var theLeftSide;
+      var theRightSide;
+      var theBody;
+      
+      /**************************************************************
+       * Function: generateFaces                                    *
+       * Purpose: Generates and appends, a certain number of images *
+       *          at random position. to the 'leftSide' div element *
+       * Parameters: None                                           *
+       * Returns: Nothing                                           *
+       **************************************************************/
+      function generateFaces() {
+        theLeftSide  = document.getElementById("leftSide" );
+        for (i = 0; i < numberOfFaces; i++) {
+          var img = document.createElement("img");
+          var x = Math.ceil(Math.random() * 400);
+          var y = Math.ceil(Math.random() * 400);
+          img.src = "http://home.cse.ust.hk/~rossiter/mooc/" +
+                    "matching_game/smile.png";
+          img.style.left = x + "px";
+          img.style.top  = y + "px";
+          theLeftSide.appendChild(img);
+        }
+      }
+      
+    </script>
+    
+  </head>
+  
+  <body onload="generateFaces();">
+    <h1>Matching Game</h1>
+    <p>
+      Click on the extra smiling face on the left.
+    </p>
+    <!-- Left  side of the guessing game -->
+    <div id="leftSide">
+    </div> 
+    
+    <!-- Right side of the guessing game -->
+    <div id="rightSide">
+    </div> 
+    
+  </body>
+  
+</html>
+
+

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    <title>Guessing game</title>
+    
+    <style>
+      div, img {
+        position: absolute;
+      }  
+      div {
+        width:  500px; 
+        height: 500px;
+      }
+      #rightSide { 
+        left: 500px; 
+        border-left: 1px solid black; 
+      }
+    </style>
+    
+    <script>
+      var numberOfFaces = 5;
+      var theRightSide;
+      var theLeftSide;
+      var theBody;
+      
+      /**************************************************************
+       * Function: generateFaces                                    *
+       * Purpose: Generate and append, a certain number of images   *
+       *          at random position, to the 'leftSide' div element *
+       * Parameters: None                                           *
+       * Returns: Nothing                                           *
+       **************************************************************/
+      function generateFaces() {
+        theLeftSide  = document.getElementById("leftSide" );
+        theRightSide = document.getElementById("rightSide");
+        theBody = document.getElementsByTagName("body")[0];
+        theLeftSide.innerHTML  = "";
+        theRightSide.innerHTML = "";
+
+        for (i = 0; i < numberOfFaces; i++) {
+          var img = document.createElement("img");
+          var x = Math.ceil(Math.random() * 400);
+          var y = Math.ceil(Math.random() * 400);
+          img.src = "http://home.cse.ust.hk/~rossiter/mooc/" +
+                    "matching_game/smile.png";
+          img.style.left = x + "px";
+          img.style.top  = y + "px";
+          theLeftSide.appendChild(img);
+        }
+        
+        bindBehavior();
+        cloneFaces();
+      }
+      
+      /**************************************************************
+       * Function: cloneFaces                                       *
+       * Purpose: Clone and append, the 'leftSide' div element, to  *
+       *          the 'rightSide' div element, removing the last    *
+       *          child of the cloned branch.                       *
+       * Parameters: None                                           *
+       * Returns: Nothing                                           *
+       **************************************************************/
+      function cloneFaces() {
+        leftSideFaces = document.getElementById("leftSide").cloneNode(true);
+        var deletedChild = leftSideFaces.lastChild; 
+        leftSideFaces.removeChild(deletedChild);
+        document.getElementById("rightSide").appendChild(leftSideFaces);
+      }
+      
+      /**************************************************************
+       * Function: bindBehavior                                     *
+       * Purpose: Bind game logic to all html elements on the web   *
+       *          page.                                             *
+       * Parameters: None                                           *
+       * Returns: Nothing                                           *
+       **************************************************************/
+      function bindBehavior() {
+        theBody.onclick = function gameOver() {
+          alert("Game Over!");
+          theBody.onclick = null;
+          theLeftSide.lastChild.onclick = null;
+        }; 
+
+        theLeftSide.lastChild.onclick = function nextLevel(event) {
+          event.stopPropagation();
+          numberOfFaces += 5;
+          generateFaces();
+        };
+      }
+      
+    </script>
+    
+  </head>
+  
+  <body onload="generateFaces();">
+    <h1>Matching Game</h1>
+    <p>
+      Click on the extra smiling face on the left.
+    </p>
+    <!-- Left  side of the guessing game -->
+    <div id="leftSide">
+    </div> 
+    
+    <!-- Right side of the guessing game -->
+    <div id="rightSide">
+    </div> 
+    
+  </body>
+  
+</html>
+
+
